@@ -216,24 +216,4 @@
 	
 	# перезапуск supervisor
 	➜  ~ sudo service supervisor stop
-	➜  ~ sudo service supervisor start
-
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+	➜  ~ sudo service supervisor start	
