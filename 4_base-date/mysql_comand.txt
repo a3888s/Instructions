@@ -44,19 +44,19 @@
 # СТВОРЕННЯ БАЗИ ДАНИХ
 
 1. Зайдіть в інтерактивний режим командної оболонки MySQL за допомогою команди:
-   sudo mysql
+	➜  ~ sudo mysql
 
 2. Створіть нового користувача бази даних і базу даних за допомогою наступних команд:
-   CREATE DATABASE dbname;
-   CREATE USER 'username'@'localhost' IDENTIFIED BY 'password';
-   GRANT ALL PRIVILEGES ON dbname.* TO 'username'@'localhost';
-   FLUSH PRIVILEGES;
+	➜  ~ CREATE DATABASE dbname;
+	➜  ~ CREATE USER 'username'@'localhost' IDENTIFIED BY 'password';
+	➜  ~ GRANT ALL PRIVILEGES ON dbname.* TO 'username'@'localhost';
+	➜  ~ FLUSH PRIVILEGES;
    Замість "dbname", "username" та "password" введіть ім'я бази даних, ім'я користувача та пароль відповідно.
 
 3. Вийдіть з інтерактивного режиму командної оболонки MySQL, введіть "exit".
 
 4. Щоб забезпечити те, що MariaDB буде запускатися при перезавантаженні системи, виконайте наступну команду:
-   sudo systemctl enable mariadb
+	➜  ~ sudo systemctl enable mariadb
 
 5. Щоб перезапустити MariaDB, виконайте наступну команду:
-   sudo systemctl restart mariadb
+	➜  ~ sudo systemctl restart mariadb
