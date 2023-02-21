@@ -5,7 +5,7 @@
   CREATE DATABASE flask_shop;
 
 # ПЕРЕГЛЯД ТАБЛИЦЬ
-  SHOW DATABASE;
+  SHOW DATABASES;
 +--------------------+
 | Database           |
 +--------------------+
@@ -159,6 +159,20 @@
 +------------+---------+------+-----+---------+----------------+
 4 rows in set (0.001 sec)
 
+# ПЕРЕГЛЯД ТАБЛИЦЬ БАЗИ flask_shop;
+  SHOW TABLES;
++----------------------+
+| Tables_in_flask_shop |
++----------------------+
+| Brand                |
+| Category             |
+| Order_item           |
+| Product              |
+| Shop_order           |
+| User                 |
++----------------------+
+6 rows in set (0.000 sec)
+
 # ВНОСИМО ДАНІ В ТАБЛИЦЮ Category;
   INSERT INTO Category(name) VALUES("Теефони");
   INSERT INTO Category(name) VALUES("Ноутбуки");
@@ -204,6 +218,3 @@
 |  7 | Acer    |
 |  8 | LG      |
 +----+---------+
-
-
- 
