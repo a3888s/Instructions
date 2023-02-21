@@ -1,0 +1,209 @@
+# ВІДКРИВАЄМО MySQL
+  sudo mysql
+
+# СТВОРЮЄМО БАЗУ ДАНИХ
+  CREATE DATABASE flask_shop;
+
+# ПЕРЕГЛЯД ТАБЛИЦЬ
+  SHOW DATABASE;
++--------------------+
+| Database           |
++--------------------+
+| flask_shop         |
+| information_schema |
+| library            |
+| mysql              |
+| performance_schema |
++--------------------+
+5 rows in set (0.001 sec)
+
+# ПІДКЛЮЧАЄМОСЬ ДО flask_shop;
+  USE flask_shop;
+
+# СТВОРЮЄМО ТАБЛИЦЮ Category;
+  CREATE TABLE Category(
+    -> id INTEGER PRIMARY KEY AUTO_INCREMENT,
+    -> name VARCHAR(50) NOT NULL
+    -> );
+
+# ПЕРЕГЛЯДАЄМО ТАБЛИЦЮ Category;
+  DESCRIBE Category;
++-------+-------------+------+-----+---------+----------------+
+| Field | Type        | Null | Key | Default | Extra          |
++-------+-------------+------+-----+---------+----------------+
+| id    | int(11)     | NO   | PRI | NULL    | auto_increment |
+| name  | varchar(50) | NO   |     | NULL    |                |
++-------+-------------+------+-----+---------+----------------+
+2 rows in set (0.001 sec)
+
+# СТВОРЮЄМО ТАБЛИЦЮ Brand;
+  CREATE TABLE Category(
+    -> id INTEGER PRIMARY KEY AUTO_INCREMENT,
+    -> name VARCHAR(50) NOT NULL
+    -> );
+
+# ПЕРЕГЛЯДАЄМО ВЛАСТИВОСТІ ТАБЛИЦІ Brand;
+  DESCRIBE Brand;
++-------+-------------+------+-----+---------+----------------+
+| Field | Type        | Null | Key | Default | Extra          |
++-------+-------------+------+-----+---------+----------------+
+| id    | int(11)     | NO   | PRI | NULL    | auto_increment |
+| name  | varchar(50) | NO   |     | NULL    |                |
++-------+-------------+------+-----+---------+----------------+
+2 rows in set (0.001 sec)
+
+# СТВОРЮЄМО ТАБЛИЦЮ Product;
+  CREATE TABLE Product(
+    -> id INTEGER PRIMARY KEY AUTO_INCREMENT,
+    -> name VARCHAR(255) NOT NULL,
+    -> price DECIMAL(10,2) NOT NULL,
+    -> description TEXT,
+    -> is_available BOOLEAN DEFAULT true,
+    -> created DATETIME DEFAULT now(),
+    -> updated DATETIME DEFAULT now(),
+    -> category_id INTEGER NOT NULL,
+    -> brand_id INTEGER NOT NULL,
+    -> FOREIGN KEY(brand_id) REFERENCES Brand(id),
+    -> FOREIGN KEY(category_id) REFERENCES Category(id));
+
+# ПЕРЕЛЯДАЄМО ВЛАСТИВОСТІ ТАБЛИЦІ Product;
+  DESCRIBE Product;
++--------------+---------------+------+-----+---------------------+----------------+
+| Field        | Type          | Null | Key | Default             | Extra          |
++--------------+---------------+------+-----+---------------------+----------------+
+| id           | int(11)       | NO   | PRI | NULL                | auto_increment |
+| name         | varchar(255)  | NO   |     | NULL                |                |
+| price        | decimal(10,2) | NO   |     | NULL                |                |
+| description  | text          | YES  |     | NULL                |                |
+| is_available | tinyint(1)    | YES  |     | 1                   |                |
+| created      | datetime      | YES  |     | current_timestamp() |                |
+| updated      | datetime      | YES  |     | current_timestamp() |                |
+| category_id  | int(11)       | NO   | MUL | NULL                |                |
+| brand_id     | int(11)       | NO   | MUL | NULL                |                |
++--------------+---------------+------+-----+---------------------+----------------+
+9 rows in set (0.001 sec)
+
+
+# СТВОРЮЄМО ТАБЛИЦЮ User;
+  CREATE TABLE User(
+    -> id INTEGER PRIMARY KEY AUTO_INCREMENT,
+    -> email VARCHAR(100) NOT NULL,
+    -> password VARCHAR(20) NOT NULL,
+    -> birthday DATE,
+    -> is_active BOOLEAN DEFAULT true,
+    -> is_staff BOOLEAN DEFAULT false,
+    -> created DATETIME DEFAULT now()
+    -> );
+
+# ПЕРЕГЛЯДАЄМО ВЛАСТИВОСТІ ТАБЛИЦІ User;
+  DESCRIBE Product;
++-----------+--------------+------+-----+---------------------+----------------+
+| Field     | Type         | Null | Key | Default             | Extra          |
++-----------+--------------+------+-----+---------------------+----------------+
+| id        | int(11)      | NO   | PRI | NULL                | auto_increment |
+| email     | varchar(100) | NO   |     | NULL                |                |
+| password  | varchar(20)  | NO   |     | NULL                |                |
+| birthday  | date         | YES  |     | NULL                |                |
+| is_active | tinyint(1)   | YES  |     | 1                   |                |
+| is_staff  | tinyint(1)   | YES  |     | 0                   |                |
+| created   | datetime     | YES  |     | current_timestamp() |                |
++-----------+--------------+------+-----+---------------------+----------------+
+7 rows in set (0.002 sec)
+
+# СТВОРЮЄМО ТАБЛИЦЮ Shop_order;
+  CREATE TABLE Shop_order(
+    -> id INTEGER PRIMARY KEY AUTO_INCREMENT,
+    -> user_id INTEGER NOT NULL,
+    -> status VARCHAR(25) NOT NULL,
+    -> address VARCHAR(200) NOT NULL,
+    -> mobile VARCHAR(15),
+    -> is_archive BOOLEAN DEFAULT false,
+    -> created DATETIME DEFAULT NOW(),
+    -> FOREIG KEY(user_id) REFERENCES User(id)
+    -> );
+
+# ПЕРЕГЛЯДАЄМО ВЛАСТИВОСТІ ТАБЛИЦІ Shop_order;
+  DESCRIBE Shop_order;
++------------+--------------+------+-----+---------------------+----------------+
+| Field      | Type         | Null | Key | Default             | Extra          |
++------------+--------------+------+-----+---------------------+----------------+
+| id         | int(11)      | NO   | PRI | NULL                | auto_increment |
+| user_id    | int(11)      | NO   | MUL | NULL                |                |
+| status     | varchar(25)  | NO   |     | NULL                |                |
+| address    | varchar(200) | NO   |     | NULL                |                |
+| mobile     | varchar(15)  | YES  |     | NULL                |                |
+| is_archive | tinyint(1)   | YES  |     | 0                   |                |
+| created    | datetime     | YES  |     | current_timestamp() |                |
++------------+--------------+------+-----+---------------------+----------------+
+7 rows in set (0.002 sec)
+
+# СТВОРЮЄМО ТАБЛИЦЮ Order_item;
+  CREATE TABLE Order_item(
+    -> id INTEGER PRIMARY KEY AUTO_INCREMENT,
+    -> order_id INTEGER NOT NULL,
+    -> product_id INTEGER NOT NULL,
+    -> quantity INTEGER NOT NULL DEFAULT 1,
+    -> FOREIGN KEY(order_id) REFERENCES Shop_order(id),
+    -> FOREIGN KEY(product_id) REFERENCES Product(id)
+    -> );
+
+# ПЕРЕГЛЯДАЄМО ТАБЛИЦЮ Order_item;
+  DESCRIBE Order_item;
++------------+---------+------+-----+---------+----------------+
+| Field      | Type    | Null | Key | Default | Extra          |
++------------+---------+------+-----+---------+----------------+
+| id         | int(11) | NO   | PRI | NULL    | auto_increment |
+| order_id   | int(11) | NO   | MUL | NULL    |                |
+| product_id | int(11) | NO   | MUL | NULL    |                |
+| quantity   | int(11) | NO   |     | 1       |                |
++------------+---------+------+-----+---------+----------------+
+4 rows in set (0.001 sec)
+
+# ВНОСИМО ДАНІ В ТАБЛИЦЮ Category;
+  INSERT INTO Category(name) VALUES("Теефони");
+  INSERT INTO Category(name) VALUES("Ноутбуки");
+  INSERT INTO Category(name) VALUES("Планшети");
+  INSERT INTO Category(name) VALUES("Монітори");
+  INSERT INTO Category(name) VALUES("Електронні книги");
+
+# ПЕРЕГЛЯДАЄМО ТАБЛИЦЮ Category;
+  SELECT * FROM Category;
++----+---------------------------------+
+| id | name                            |
++----+---------------------------------+
+|  1 | Телефони                        |
+|  2 | Ноутбуки                        |
+|  3 | Планшети                        |
+|  4 | Монітори                        |
+|  5 | Електронні книги                |
++----+---------------------------------+
+5 rows in set (0.001 sec)
+
+# ВНОСИМО ДАНІ В ТАБЛИЦЮ Brand;
+  INSERT INTO Brand(name) VALUES
+    -> ("Apple"),
+    -> ("Samsung")
+    -> ("Xiomi")
+    -> ("Asus")
+    -> ("Lenovo"),
+    -> ("HP"),
+    -> ("Acer"),
+    -> ("LG");
+
+# ПЕРЕГЛЯДАЄМО ТАБЛИЦЮ Brand;
+  SELECT * FROM Brand;
++----+---------+
+| id | name    |
++----+---------+
+|  1 | Apple   |
+|  2 | Samsung |
+|  3 | Xiomi   |
+|  4 | Asus    |
+|  5 | Lenovo  |
+|  6 | HP      |
+|  7 | Acer    |
+|  8 | LG      |
++----+---------+
+
+
+ 
